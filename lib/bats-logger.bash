@@ -8,6 +8,10 @@ info() {
   log "$1" "INFO"
 }
 
+trace() {
+  log "$1" "TRACE"
+}
+
 error() {
   log "$1" "ERROR"
   exit 1

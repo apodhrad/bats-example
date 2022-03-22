@@ -11,15 +11,15 @@ BATS = $(TARGET)/bats-core-latest/bin/bats
 TEST ?= tests/*.bats
 
 # Folder for test resources. This variable will be accessible from any test.
-TEST_RESOURCES = $(CURDIR)/tests/test-resources
+export TEST_RESOURCES = $(CURDIR)/tests/test-resources
 
 # Folder for test reports. This variable will be accessible from any test.
-TEST_REPORTS = $(TARGET)/test-reports
+export TEST_REPORTS = $(TARGET)/test-reports
 
 # Change it if you want failing tests.
 # You can also overwrite it in cmd as follows
 #    make test TEST_STRING=xyz
-TEST_STRING=abc
+export TEST_STRING=abc
 
 # Internal function for getting a specifi bats library.
 define get_bats

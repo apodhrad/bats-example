@@ -19,3 +19,9 @@ load libraries
   local expected="abc"
   assert_equal "$actual" "$expected"
 }
+
+@test "Assert equals with a test resource" {
+  local actual=$(cat "$TEST_RESOURCES/test.txt")
+  local expected="abc"
+  assert_equal "$actual" "$expected"
+}
