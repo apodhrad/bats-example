@@ -5,24 +5,37 @@ BATS_ASSERT_VERSION ?= v2.0.0
 TARGET_DIR = $(CURDIR)/target
 TEST_REPORTS_DIR = $(TARGET_DIR)/test-reports
 BATS = $(TARGET_DIR)/bats-core-latest/bin/bats
+
+# By default, all tests in tests/*.bats will be executed
+# You can also overwrite it in cmd as follows
+#    make test TEST=tests/test_1.bats
 TEST ?= tests/*.bats
 
+# Change it if you want failing tests
+# You can also overwrite it in cmd as follows
+#    make test TEST_STRING=xyz
+export TEST_STRING=abc
+
+# Internal function for getting a specifi bats library
 define get_bats
 	@if [[ ! -d $(TARGET_DIR)/$(1)-$(2) ]]; then git -c advice.detachedHead=false clone --depth 1 --branch $(2) https://github.com/bats-core/$(1).git $(TARGET_DIR)/$(1)-$(2); fi
 	@rm -rf "$(TARGET_DIR)/$(1)-latest"
 	@ln -s "$(TARGET_DIR)/$(1)-$(2)" "$(TARGET_DIR)/$(1)-latest"
 endef
 
-test: install
-	@echo "Run test $(TEST)"
-	@mkdir -p $(TEST_REPORTS_DIR)
-	@$(BATS) --formatter tap --report-formatter junit --output $(TEST_REPORTS_DIR) $(TEST)
-
-install:
+# Install all needed bats libraries
+install-bats:
 	$(call get_bats,"bats-core",$(BATS_CORE_VERSION))
 	$(call get_bats,"bats-support",$(BATS_SUPPORT_VERSION))
 	$(call get_bats,"bats-assert",$(BATS_ASSERT_VERSION))
 	@$(BATS) -v
 
+# Execute test(s)
+test: install-bats
+	@echo "Run test $(TEST)"
+	@mkdir -p $(TEST_REPORTS_DIR)
+	@$(BATS) --formatter tap --report-formatter junit --output $(TEST_REPORTS_DIR) $(TEST)
+
+# Clean all generated files including bats libraries
 clean:
 	rm -rf $(TARGET_DIR)
