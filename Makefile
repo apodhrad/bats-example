@@ -10,7 +10,7 @@ BATS = $(BATS_DIR)/bats-core-latest/bin/bats
 # By default, all tests in tests/*.bats will be executed.
 # You can also overwrite it in cmd as follows
 #    make test TEST=tests/test_1.bats
-TEST ?= tests/*.bats
+TEST ?= $(TEST_DIR)/*.bats
 
 # Folder for test resources. This variable will be accessible from any test.
 export TEST_RESOURCES = $(TEST_DIR)/resources
