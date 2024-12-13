@@ -2,6 +2,7 @@ BATS_CORE_VERSION ?= v1.11.1
 BATS_SUPPORT_VERSION ?= v0.3.0
 BATS_ASSERT_VERSION ?= v2.1.0
 
+LIB_DIR = $(CURDIR)/lib
 BATS_DIR = $(CURDIR)/tmp
 TEST_DIR = $(CURDIR)/tests
 
@@ -41,7 +42,7 @@ install-bats:
 test: install-bats
 	@echo "Run test $(TEST)"
 	@mkdir -p $(TEST_RESULTS)
-	@$(BATS) --formatter tap --report-formatter junit --output $(TEST_RESULTS) $(TEST)
+	@LIB_DIR=$(LIB_DIR) BATS_DIR=$(BATS_DIR) $(BATS) --formatter tap --report-formatter junit --output $(TEST_RESULTS) $(TEST)
 
 # Clean all generated files including bats libraries.
 clean:

@@ -1,4 +1,4 @@
-load '../tmp/bats-support-latest/load'
-load '../tmp/bats-assert-latest/load'
-load '../lib/bats-logger'
-load '../lib/bats-utils'
+load "${BATS_DIR}/bats-support-latest/load"
+load "${BATS_DIR}/bats-assert-latest/load"
+load "${LIB_DIR}/bats-logger"
+load "${LIB_DIR}/bats-utils"
